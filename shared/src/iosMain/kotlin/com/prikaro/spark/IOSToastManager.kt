@@ -11,4 +11,5 @@ class IOSToastManager : ToastManager {
     override fun showDialog(title: String, message: String, buttonText: String) {
         onShowDialog?.invoke(title, message, buttonText)
     }
+
 }

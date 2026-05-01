@@ -80,7 +80,7 @@ mavenPublishing {
     pom {
         name.set("Spark Shared Library")
         description.set("Shared KMP library with Compose UI components")
-        url.set("https://github.com/yourusername/yourrepo") // Required for some portals
+        url.set("https://github.com/karun02525/Spark-Messages") // Required for some portals
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")
