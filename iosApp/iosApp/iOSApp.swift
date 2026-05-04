@@ -4,11 +4,11 @@ import UIKit
 
 @main
 struct iOSApp: App {
-    
+
     init() {
-        KMMInitializer.shared.start()
+        ToastSdk.shared.setup()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -16,4 +16,3 @@ struct iOSApp: App {
     }
 }
 
-//Global Toast Helper

@@ -12,11 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.prikaro.spark.bridge.NativeBridge
+import org.koin.compose.koinInject
 
 @Composable
 @Preview
 fun App() {
     val context = LocalContext.current
+    val msg: NativeBridge = koinInject()
     MaterialTheme {
         Column(
             modifier = Modifier
@@ -26,18 +29,14 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(onClick = {
-                KmmUtils.show("Hello from KMMToast!")
+                msg.share("Hello from KMMToast!")
             }) {
-                Text("Click me!")
+                Text("Click me Share!")
             }
 
             Button(onClick = {
-                KmmUtils.init(AndroidToastManager(context))
-                KmmUtils.showDialog(
-                    title = "KMMToast Dialog",
-                    message = "This is a dialog from KMMToast!",
-                    buttonText = "OK"
-                )
+
+                msg.showToast("Hello from KMMToast! Dialog")
 
             }) {
                 Text("Click me! Dialog")

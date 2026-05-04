@@ -13,8 +13,8 @@ plugins {
 }
 
 // 1. Set global coordinates
-group = "com.prikaro"
-version = "1.0.0"
+group = "io.github.karun02525"
+version = "1.0.5"
 
 kotlin {
     androidTarget {
@@ -37,6 +37,9 @@ kotlin {
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation("io.insert-koin:koin-android:4.2.1")
+        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -44,6 +47,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
 
+            implementation("io.insert-koin:koin-core:4.2.1")
             // API ensures consuming apps see Coroutine classes
             api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
         }
@@ -62,25 +66,25 @@ android {
     }
 }
 
-// 3. Proper Maven Publishing Block
 mavenPublishing {
-    // Configures the library to publish all KMP targets (Android/iOS)
+    // 1. Configure KMP targets
     configure(KotlinMultiplatform(
         javadocJar = JavadocJar.Empty(),
-        androidVariantsToPublish = listOf("release") // 👈 Add this line
+        androidVariantsToPublish = listOf("release")
     ))
 
-    // Defines the artifact identity
+    // 2. Artifact Identity
     coordinates(
         groupId = group.toString(),
         artifactId = "spark-shared",
         version = version.toString()
     )
 
+    // 3. POM Metadata (Required by Maven Central)
     pom {
         name.set("Spark Shared Library")
         description.set("Shared KMP library with Compose UI components")
-        url.set("https://github.com/karun02525/Spark-Messages") // Required for some portals
+        url.set("https://github.com/karun02525/Spark-Messages")
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")
@@ -91,10 +95,17 @@ mavenPublishing {
             developer {
                 id.set("prikaro")
                 name.set("Prikaro")
+                email.set("karunkumar02525@gmail.com") // Recommended
             }
+        }
+        scm {
+            connection.set("scm:git:github.com/karun02525/Spark-Messages.git")
+            developerConnection.set("scm:git:ssh://github.com/karun02525/Spark-Messages.git")
+            url.set("https://github.com/karun02525/Spark-Messages")
         }
     }
 
-    // Tells the plugin where to host the files (used for publishToMavenLocal)
-    publishToMavenCentral(SonatypeHost.S01, false)
+    // 4. Sign all publications (Required for Cloud)
+    signAllPublications()
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 }
